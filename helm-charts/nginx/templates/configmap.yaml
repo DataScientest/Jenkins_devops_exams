@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+      listen 8080;
+      location /movie {
+        proxy_pass http://movie-service:8000;
+      }
+      location /cast {
+        proxy_pass http://cast-service:8000;
+      }
+    }

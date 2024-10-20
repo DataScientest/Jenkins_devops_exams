@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: { { .Values.replicaCount } }
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: { { .Values.service.port } }
+          volumeMounts:
+            - name: proxy-config
+              mountPath: "{{ .Values.proxyConfig }}"
+              subPath: default.conf
+      volumes:
+        - name: proxy-config
+          configMap:
+            name: nginx-config

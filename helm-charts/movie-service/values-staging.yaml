@@ -1,0 +1,13 @@
+replicaCount: 2
+
+image:
+  repository: thomcoul/cast_service
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
